@@ -64,7 +64,26 @@ public class MultiControleur {
 			destinationPage = "ajouterAdherent";
 		} catch (Exception e) {
 			request.setAttribute("MesErreurs", e.getMessage());
-			destinationPage = "rreur";
+			destinationPage = "Erreur";
+		}
+
+		return new ModelAndView(destinationPage);
+	}
+
+	@RequestMapping(value = "modifierAdherent.htm")
+	public ModelAndView modifierAdherent(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		String destinationPage = "";
+        int id = Integer.parseInt(request.getParameter("id"));
+
+		try {
+            Service unService = new Service();
+            Adherent ad = unService.consulterAdherent(id);
+            request.setAttribute("adherant", ad);
+			destinationPage = "modifierAdherent";
+		} catch (Exception e) {
+			request.setAttribute("MesErreurs", e.getMessage());
+			destinationPage = "Erreur";
 		}
 
 		return new ModelAndView(destinationPage);

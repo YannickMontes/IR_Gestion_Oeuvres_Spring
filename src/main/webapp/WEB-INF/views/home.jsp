@@ -33,7 +33,8 @@
 		<li><a href="ajouterAdherent.htm"><font
 				face="Arial">Ajout Adhérent</font></a></li>
 		<li><a href="listerAdherent.htm"><font
-				face="Arial">lister les adhérents</font></a><font face="Arial"> </font></li>
+				face="Arial">Lister les adhérents</font></a><font face="Arial">
+		</font></li>
 		<li><a href="javascript:fermer()"><font face="Arial">Quitter</font></a><font
 			face="Arial"> </font></li>
 	</ul>

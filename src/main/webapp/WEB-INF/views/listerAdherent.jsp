@@ -25,7 +25,7 @@
 			<TH>Nom</TH>
 			<TH>Prénom</TH>
 			<TH>Ville</TH>
-
+            <TH>Options</TH>
 		</TR>
 
 		<c:forEach items="${mesAdherents}" var="item">
@@ -34,6 +34,7 @@
 				<td>${item.nomAdherent}</td>
 				<td>${item.prenomAdherent}</td>
                 <td>${item.villeAdherent}</td>
+				<td><li><a href="modifierAdherent.htm?id=${item.idAdherent}"><font face="Arial">Modifier un adhérent</font></a><font face="Arial"> </font></li></td>
 			</tr>
 		</c:forEach>
 	</TABLE>
