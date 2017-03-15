@@ -44,6 +44,33 @@ public class DialogueBd {
 		}
 	}
 
+    public void modificationDB(String mysql, Map params) throws MonException {
+        Connection cnx = null;
+        PreparedStatement ps;
+        ResultSet rs;
+        try {
+            cnx = Connexion.getInstance().getConnexion();
+            ps = cnx.prepareStatement(mysql);
+            setParametres(ps, (Map) params.get(0));
+            ps.executeUpdate("SET NAMES UTF8");
+            // Execution de la requete
+            rs = ps.executeQuery();
+
+            cnx.close();
+        } catch (SQLException e)
+
+        {
+            System.out.println("Erreur :" + e.getMessage());
+            System.out.println(mysql);
+            new MonException(e.getMessage());
+        }
+
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new MonException(e.getMessage());
+        }
+    }
+
 	public List<Object> lectureParametree(String req, Map mParams) throws MonException {
 		Connection cnx = null;
 		PreparedStatement ps;

@@ -56,6 +56,32 @@ public class Service {
 		}
 	}
 
+    // gestion des adherents
+    // Modification d'un adherent dans la BD, à partir d'un adhérent passé en paramètres
+    // BDD
+    public void modifierAdherent(Adherent unAdherent) throws MonException {
+
+        Map mParams = new HashMap();
+        Map mParam;
+        DialogueBd unDialogueBd = DialogueBd.getInstance();
+
+        try
+        {
+            String mysql = "UPDATE adherent SET nom_adherent = ?, prenom_adherent = ?, ville_adherent = ? WHERE id_adherent = ?";
+            mParam = new HashMap();
+            mParam.put(1, unAdherent.getNomAdherent());
+            mParam.put(2, unAdherent.getPrenomAdherent());
+            mParam.put(3, unAdherent.getVilleAdherent());
+            mParam.put(4, unAdherent.getIdAdherent());
+            mParams.put(0, mParam);
+
+            unDialogueBd.modificationDB(mysql, mParams);
+        } catch (MonException e)
+        {
+            throw e;
+        }
+    }
+
 	// Consultation des adh�rents
 	// Fabrique et renvoie une liste d'objets adh�rent contenant le r�sultat de
 	// la requ�te BDD

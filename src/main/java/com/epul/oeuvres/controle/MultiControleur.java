@@ -89,6 +89,29 @@ public class MultiControleur {
 		return new ModelAndView(destinationPage);
 	}
 
+    @RequestMapping(value = "modifierAdherentDB.htm")
+    public ModelAndView modifierAdherentDB(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        String destinationPage = "";
+        int id = Integer.parseInt(request.getParameter("id"));
+
+        try {
+            Service unService = new Service();
+            Adherent ad = unService.consulterAdherent(id);
+            ad.setNomAdherent(request.getParameter("txtnom"));
+            ad.setPrenomAdherent(request.getParameter("txtprenom"));
+            ad.setVilleAdherent(request.getParameter("txtville"));
+
+            unService.modifierAdherent(ad);
+            destinationPage = "home";
+        } catch (Exception e) {
+            request.setAttribute("MesErreurs", e.getMessage());
+            destinationPage = "Erreur";
+        }
+
+        return new ModelAndView(destinationPage);
+    }
+
 	// /
 	// / Affichage de la page d'accueil
 	// /

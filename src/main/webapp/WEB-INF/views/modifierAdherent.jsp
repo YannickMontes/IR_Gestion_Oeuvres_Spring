@@ -14,7 +14,7 @@
 <H1> Modification d'un adhérent </H1>
 
 <DIV align="center">
-    <FORM  name='identification' method="post" action="Controleur?action=modifierAdherentDB" onsubmit="return teste()">
+    <FORM  name='identification' method="post" action="modifierAdherentDB.htm" onsubmit="return teste()">
         <c:set var="adherant"  scope="page" />
         <P align="left"><FONT face="Arial" color="#004080"></FONT>
             <FONT face="Arial" color="#004080"> <BR>&nbsp;  &nbsp;  &nbsp; Nom de l'adherent : </FONT>
