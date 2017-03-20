@@ -112,6 +112,25 @@ public class MultiControleur {
         return new ModelAndView(destinationPage);
     }
 
+    @RequestMapping(value = "supprimerAdherent.htm")
+    public ModelAndView supprimerAdherentDB(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        String destinationPage = "";
+        int id = Integer.parseInt(request.getParameter("id"));
+
+        try {
+            Service unService = new Service();
+
+            unService.supprimerAdherent(id);
+            destinationPage = "home";
+        } catch (Exception e) {
+            request.setAttribute("MesErreurs", e.getMessage());
+            destinationPage = "Erreur";
+        }
+
+        return new ModelAndView(destinationPage);
+    }
+
 	// /
 	// / Affichage de la page d'accueil
 	// /

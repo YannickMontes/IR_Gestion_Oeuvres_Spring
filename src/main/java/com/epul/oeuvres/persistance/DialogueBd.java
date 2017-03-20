@@ -47,14 +47,14 @@ public class DialogueBd {
     public void modificationDB(String mysql, Map params) throws MonException {
         Connection cnx = null;
         PreparedStatement ps;
-        ResultSet rs;
+        int rs;
         try {
             cnx = Connexion.getInstance().getConnexion();
             ps = cnx.prepareStatement(mysql);
             setParametres(ps, (Map) params.get(0));
-            ps.executeUpdate("SET NAMES UTF8");
+            // ps.executeUpdate("SET NAMES UTF8");
             // Execution de la requete
-            rs = ps.executeQuery();
+            ps.executeUpdate();
 
             cnx.close();
         } catch (SQLException e)

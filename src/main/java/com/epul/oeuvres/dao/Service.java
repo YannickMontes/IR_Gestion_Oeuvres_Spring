@@ -59,6 +59,29 @@ public class Service {
     // gestion des adherents
     // Modification d'un adherent dans la BD, à partir d'un adhérent passé en paramètres
     // BDD
+    public void supprimerAdherent(Integer id) throws MonException {
+
+        Map mParams = new HashMap();
+        Map mParam;
+        DialogueBd unDialogueBd = DialogueBd.getInstance();
+
+        try
+        {
+            String mysql = "DELETE FROM adherent WHERE id_adherent = ?";
+            mParam = new HashMap();
+            mParam.put(1, id);
+            mParams.put(0, mParam);
+
+            unDialogueBd.modificationDB(mysql, mParams);
+        } catch (MonException e)
+        {
+            throw e;
+        }
+    }
+
+    // gestion des adherents
+    // Modification d'un adherent dans la BD, à partir d'un adhérent passé en paramètres
+    // BDD
     public void modifierAdherent(Adherent unAdherent) throws MonException {
 
         Map mParams = new HashMap();
