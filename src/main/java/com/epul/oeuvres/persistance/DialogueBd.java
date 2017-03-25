@@ -214,7 +214,9 @@ public class DialogueBd {
 				ps.setDouble((Integer) indice, (Double) mParam.get(indice));
 			} else if (classe.contains("Date")) {
 				ps.setDate((Integer) indice, (Date) mParam.get(indice));
-			}
+			} else if (classe.contains("Float")) {
+                ps.setFloat((Integer) indice, (Float) mParam.get(indice));
+            }
 		}
 		return ps;
 	}
