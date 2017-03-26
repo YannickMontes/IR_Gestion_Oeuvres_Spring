@@ -5,35 +5,32 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Ajouter une oeuvre</title>
+    <title>Réserver une oeuvre</title>
 </head>
 
 
 <body>
-<H1> Ajout d'une oeuvre </H1>
+<H1> Réserver une oeuvre </H1>
 
 <DIV align="center">
-    <FORM name='identification' method="post" action="insererOeuvre.htm">
+    <FORM name='identification' method="post" action="insererReservation.htm">
         <P align="left"><FONT face="Arial" color="#004080"></FONT>
-            <FONT face="Arial" color="#004080"> <BR>&nbsp; &nbsp; &nbsp; Titre de l'oeuvre : </FONT>
-            <INPUT type="text" name="txttitre" value="" id="title"> <BR>
+            <FONT face="Arial" color="#004080"> <BR>&nbsp; &nbsp; &nbsp; Oeuvre : </FONT>
+            <select name="oeuvre" >
+                <c:forEach items="${oeuvres}" var="item">
+                    <option value="${item.idOeuvrevente}">${item.titreOeuvrevente}</option>
+                </c:forEach>
+            </select>
 
             <FONT face="Arial" color="#004080">
-            <BR>Prix de l'oeuvre : </FONT>
-            <input type="number" name="numPrix" id="price" min="0" value="0" step="0.01">
-            <BR>
-
-            <FONT face="Arial" color="#004080"> <BR>&nbsp; &nbsp; &nbsp; État :</FONT>
-            <select name="etat" >
-                <option value="L">L</option>
-                <option value="R">R</option>
-            </select>
+            <BR>Date de réservation : </FONT>
+            <input type="date" name="dateReservation">
             <BR>
 
             <FONT face="Arial" color="#004080"> <BR>&nbsp; &nbsp; &nbsp; Propriétaire :</FONT>
-            <select name="proprietaire" >
-                <c:forEach items="${proprietaires}" var="item">
-                    <option value="${item.idProprietaire}">${item.nomProprietaire}</option>
+            <select name="adherent" >
+                <c:forEach items="${adherents}" var="item">
+                    <option value="${item.idAdherent}">${item.nomAdherent}</option>
                 </c:forEach>
             </select>
             <FONT face="Arial" color="#004080"> <BR></FONT><BR>

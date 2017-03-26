@@ -6,6 +6,7 @@ import com.epul.oeuvres.meserreurs.MonException;
 import com.epul.oeuvres.metier.Adherent;
 import com.epul.oeuvres.metier.Oeuvrevente;
 import com.epul.oeuvres.metier.Proprietaire;
+import com.epul.oeuvres.metier.Reservation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 ///
@@ -254,6 +257,190 @@ public class MultiControleur {
 
         return new ModelAndView(destinationPage);
     }
+
+    @RequestMapping(value = "insererReservation.htm")
+    public ModelAndView insererReservation(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        String destinationPage = "";
+        try {
+            Service unService = new Service();
+
+            Reservation res = new Reservation();
+
+            res.setAdherent(unService.consulterAdherent(Integer.parseInt(request.getParameter("adherent"))));
+
+            String dateStr = request.getParameter("dateReservation");
+            SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+
+            Date dateResa = formater.parse(dateStr);
+            res.setDate(dateResa);
+            res.setOeuvrevente(unService.rechercherOeuvreIdParam(Integer.parseInt(request.getParameter("oeuvre"))));
+
+            unService.insertReservation(res);
+        } catch (Exception e) {
+            request.setAttribute("MesErreurs", e.getMessage());
+            destinationPage = "erreur";
+        }
+        destinationPage = "home";
+        return new ModelAndView(destinationPage);
+    }
+
+    @RequestMapping(value = "reserverOeuvre.htm")
+    public ModelAndView ajouterReservation(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        String destinationPage = "";
+        try {
+            destinationPage = "reserverOeuvre";
+            Service unService = new Service();
+            List<Adherent> adherents = unService.consulterListeAdherents();
+            List<Oeuvrevente> oeuvres = unService.consulterListeOeuvres();
+            request.setAttribute("adherents", adherents);
+            request.setAttribute("oeuvres", oeuvres);
+        } catch (Exception e) {
+            request.setAttribute("MesErreurs", e.getMessage());
+            destinationPage = "erreur";
+        }
+
+        return new ModelAndView(destinationPage);
+    }
+
+    @RequestMapping(value = "listerReservations.htm")
+    public ModelAndView listerReservations(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String destinationPage;
+        try {
+            // HttpSession session = request.getSession();
+            Service unService = new Service();
+            request.setAttribute("reservations", unService.consulterListeReservations());
+            destinationPage = "listerReservations";
+        } catch (MonException e) {
+            request.setAttribute("MesErreurs", e.getMessage());
+            destinationPage = "erreur";
+
+        }
+        return new ModelAndView(destinationPage);
+    }
+
+    @RequestMapping(value = "modifierReservation.htm")
+    public ModelAndView modifierReservation(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        String destinationPage = "";
+        int idOeuvre = Integer.parseInt(request.getParameter("iOeuvre"));
+        int idAdherent = Integer.parseInt(request.getParameter("idAdherent"));
+
+        try {
+            Service unService = new Service();
+            Reservation resa = unService.rechercherReservation(idOeuvre, idAdherent);
+
+            request.setAttribute("reservation", resa);
+            destinationPage = "modifierReservation";
+        } catch (Exception e) {
+            request.setAttribute("MesErreurs", e.getMessage());
+            destinationPage = "erreur";
+        }
+
+        return new ModelAndView(destinationPage);
+    }
+
+    @RequestMapping(value = "modifierReservationDB.htm")
+    public ModelAndView modifierReservationDB(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        String destinationPage = "";
+
+
+        try {
+            Service unService = new Service();
+            Reservation res = new Reservation();
+
+            res.setAdherent(unService.consulterAdherent(Integer.parseInt(request.getParameter("adherent"))));
+
+            String dateStr = request.getParameter("dateReservation");
+            SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+            Date dateResa = formater.parse(dateStr);
+            res.setDate(dateResa);
+
+            res.setOeuvrevente(unService.rechercherOeuvreIdParam(Integer.parseInt(request.getParameter("oeuvre"))));
+
+            unService.modifierReservation(res);
+            destinationPage = "home";
+        } catch (Exception e) {
+            request.setAttribute("MesErreurs", e.getMessage());
+            destinationPage = "erreur";
+        }
+
+        return new ModelAndView(destinationPage);
+    }
+
+    @RequestMapping(value = "supprimerReservation.htm")
+    public ModelAndView supprimerReservation(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        String destinationPage = "";
+        int idOeuvre = Integer.parseInt(request.getParameter("iOeuvre"));
+        int idAdherent = Integer.parseInt(request.getParameter("idAdherent"));
+
+        try {
+            Service unService = new Service();
+
+            unService.supprimerReservation(idOeuvre, idAdherent);
+            destinationPage = "home";
+        } catch (Exception e) {
+            request.setAttribute("MesErreurs", e.getMessage());
+            destinationPage = "erreur";
+        }
+
+        return new ModelAndView(destinationPage);
+    }
+
+    @RequestMapping(value = "confirmerReservation.htm")
+    public ModelAndView confirmerReservation(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        String destinationPage = "";
+        int idOeuvre = Integer.parseInt(request.getParameter("iOeuvre"));
+        int idAdherent = Integer.parseInt(request.getParameter("idAdherent"));
+
+        try {
+            Service unService = new Service();
+            Reservation res = unService.rechercherReservation(idOeuvre, idAdherent);
+            res.setStatut("confirmee");
+
+            unService.modifierReservation(res);
+            destinationPage = "home";
+        } catch (Exception e) {
+            request.setAttribute("MesErreurs", e.getMessage());
+            destinationPage = "erreur";
+        }
+
+        return new ModelAndView(destinationPage);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @RequestMapping(value = "home2.htm")
+    public ModelAndView home2(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        String destinationPage = "home2";
+
+        return new ModelAndView(destinationPage);
+    }
+
+
+
+
+
+
+
+
+
+
 
 
     // /

@@ -4,12 +4,11 @@ import com.epul.oeuvres.meserreurs.MonException;
 import com.epul.oeuvres.metier.Adherent;
 import com.epul.oeuvres.metier.Oeuvrevente;
 import com.epul.oeuvres.metier.Proprietaire;
+import com.epul.oeuvres.metier.Reservation;
 import com.epul.oeuvres.persistance.DialogueBd;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class Service {
 
@@ -328,6 +327,147 @@ public class Service {
             String mysql = "DELETE FROM oeuvrevente WHERE id_oeuvrevente = ?";
             mParam = new HashMap();
             mParam.put(1, id);
+            mParams.put(0, mParam);
+
+            unDialogueBd.modificationDB(mysql, mParams);
+        } catch (MonException e) {
+            throw e;
+        }
+    }
+
+
+
+
+
+
+    public void insertReservation(Reservation resa) throws MonException {
+        String mysql;
+
+        DialogueBd unDialogueBd = DialogueBd.getInstance();
+        try {
+            Date date = resa.getDate();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd"); // your template here
+            java.sql.Date dateDB = new java.sql.Date(date.getTime());
+
+            mysql = "insert into reservation  (id_oeuvrevente, id_adherent, date_reservation, statut)  " + "values ("
+                    + resa.getOeuvrevente().getIdOeuvrevente();
+            mysql += "," + resa.getAdherent().getIdAdherent() + ",'" + dateDB + "', 'en attente')";
+
+            unDialogueBd.insertionBD(mysql);
+        } catch (MonException e) {
+            throw e;
+        } catch (Exception exc) {
+            throw new MonException(exc.getMessage(), "systeme");
+        }
+    }
+
+    public List<Reservation> consulterListeReservations() throws MonException {
+        List<Object> rs;
+        List<Reservation> reservations = new ArrayList<Reservation>();
+        int index = 0;
+        try {
+            DialogueBd unDialogueBd = DialogueBd.getInstance();
+            rs = unDialogueBd.lecture("select * from reservation");
+
+            while (index < rs.size()) {
+                Reservation res = new Reservation();
+
+                // il faut redecouper la liste pour retrouver les lignes
+                res.setOeuvrevente(rechercherOeuvreIdParam(Integer.parseInt(rs.get(index + 0).toString())));
+                res.setAdherent(consulterAdherent(Integer.parseInt(rs.get(index + 1).toString())));
+
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = formatter.parse(rs.get(index + 2).toString());
+                res.setDate(date);
+
+                res.setStatut(rs.get(index + 3).toString());
+
+                // On incr�mente tous les 3 champs
+                index = index + 4;
+                reservations.add(res);
+            }
+
+            return reservations;
+        } catch (MonException e) {
+            throw e;
+        } catch (Exception exc) {
+            throw new MonException(exc.getMessage(), "systeme");
+        }
+    }
+
+    public Reservation rechercherReservation(int idOeuvre, int idAdherent) throws MonException {
+
+        String mysql = "";
+        Map mParams = new HashMap();
+        Map mParam;
+        List<Object> rs;
+        Reservation resa = null;
+
+        try {
+            mysql = "SELECT * FROM reservation WHERE id_oeuvrevente = ? AND id_adherent = ?";
+            mParam = new HashMap();
+            mParam.put(1, idOeuvre);
+            mParam.put(2, idAdherent);
+            mParams.put(0, mParam);
+            rs = DialogueBd.getInstance().lectureParametree(mysql, mParams);
+
+            if (rs.size() > 0) {
+
+                resa = new Reservation();
+                resa.setOeuvrevente(rechercherOeuvreIdParam(Integer.parseInt(rs.get(0).toString())));
+                resa.setAdherent(consulterAdherent(Integer.parseInt(rs.get(1).toString())));
+
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = formatter.parse(rs.get(2).toString());
+                resa.setDate(date);
+
+                resa.setStatut(rs.get(3).toString());
+            }
+        } catch (MonException e) {
+            throw e;
+        } catch (Exception exc) {
+            throw new MonException(exc.getMessage(), "systeme");
+        }
+        return resa;
+
+    }
+
+    public void modifierReservation(Reservation resa) throws MonException {
+
+        Map mParams = new HashMap();
+        Map mParam;
+        DialogueBd unDialogueBd = DialogueBd.getInstance();
+
+        try {
+            Date date = resa.getDate();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            java.sql.Date dateDB = new java.sql.Date(date.getTime());
+
+            String mysql = "UPDATE reservation SET date_reservation = ?, statut = ? WHERE id_oeuvrevente = ? AND id_adherent = ?";
+            mParam = new HashMap();
+            mParam.put(1, dateDB);
+            mParam.put(2, resa.getStatut());
+            mParam.put(3, resa.getOeuvrevente().getIdOeuvrevente());
+            mParam.put(4, resa.getAdherent().getIdAdherent());
+            mParams.put(0, mParam);
+
+            unDialogueBd.modificationDB(mysql, mParams);
+        } catch (MonException e) {
+            throw e;
+        }
+    }
+
+    public void supprimerReservation(Integer idOeuvre, Integer idAdherent) throws MonException {
+
+        Map mParams = new HashMap();
+        Map mParam;
+        DialogueBd unDialogueBd = DialogueBd.getInstance();
+
+        try {
+            String mysql = "DELETE FROM reservation WHERE id_oeuvrevente = ? AND id_adherent = ?";
+            mParam = new HashMap();
+            mParam.put(1, idOeuvre);
+            mParam.put(2, idAdherent);
             mParams.put(0, mParam);
 
             unDialogueBd.modificationDB(mysql, mParams);

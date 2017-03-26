@@ -1,6 +1,8 @@
 package com.epul.oeuvres.metier;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -14,17 +16,21 @@ public class Reservation implements Serializable {
 	private Date date;
 	private Adherent adherent;
 	private Oeuvrevente oeuvrevente;
+    private String statut;
+    private String dateDisplayed;
 
 	public Reservation() {
 	}
 
 
 
-	public Reservation(Date date, Adherent adherent, Oeuvrevente oeuvrevente) {
+	public Reservation(Date date, Adherent adherent, Oeuvrevente oeuvrevente, String statut) {
 		super();
 		this.date = date;
 		this.adherent = adherent;
 		this.oeuvrevente = oeuvrevente;
+		this.statut = statut;
+		this.dateDisplayed = "";
 	}
 
 
@@ -35,6 +41,10 @@ public class Reservation implements Serializable {
 
 	public void setDate(Date date) {
 		this.date = date;
+
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        String dateString = df.format(date);
+        this.dateDisplayed = dateString;
 	}
 
 	public Adherent getAdherent() {
@@ -53,4 +63,11 @@ public class Reservation implements Serializable {
 		this.oeuvrevente = oeuvrevente;
 	}
 
+    public String getStatut() { return this.statut; }
+
+    public void setStatut(String statut) {
+        this.statut = statut;
+    }
+
+    public String getDateDisplayed() { return this.dateDisplayed; }
 }

@@ -35,6 +35,14 @@
                 face="Arial">Ajouter oeuvre</font></a><font face="Arial">
         </font>
         </li>
+        <li><a href="reserverOeuvre.htm"><font
+                face="Arial">Réserver une oeuvre</font></a><font face="Arial">
+        </font>
+        </li>
+        <li><a href="listerReservations.htm"><font
+                face="Arial">Lister réservations</font></a><font face="Arial">
+        </font>
+        </li>
     </ul>
     </body>
 </html>
