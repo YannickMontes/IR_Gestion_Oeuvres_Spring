@@ -27,14 +27,16 @@ public class MultiControleur {
 
 //	private static final Logger logger = LoggerFactory.getLogger(MultiControleur.class);
 
-    @RequestMapping(value = "listerAdherent.htm")
+    @RequestMapping(value = "listerAdherent2.htm")
     public ModelAndView afficherLesStages(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String destinationPage;
         try {
             // HttpSession session = request.getSession();
             Service unService = new Service();
             request.setAttribute("mesAdherents", unService.consulterListeAdherents());
-            destinationPage = "listerAdherent";
+            request.setAttribute("pageName", "Adhérents");
+
+            destinationPage = "listerAdherent2";
         } catch (MonException e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "erreur";
@@ -62,12 +64,12 @@ public class MultiControleur {
         return new ModelAndView(destinationPage);
     }
 
-    @RequestMapping(value = "ajouterAdherent.htm")
+    @RequestMapping(value = "ajouterAdherent2.htm")
     public ModelAndView ajouterAdherent(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String destinationPage = "";
         try {
-            destinationPage = "ajouterAdherent";
+            destinationPage = "ajouterAdherent2";
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "erreur";
@@ -76,7 +78,7 @@ public class MultiControleur {
         return new ModelAndView(destinationPage);
     }
 
-    @RequestMapping(value = "modifierAdherent.htm")
+    @RequestMapping(value = "modifierAdherent2.htm")
     public ModelAndView modifierAdherent(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String destinationPage = "";
@@ -86,7 +88,7 @@ public class MultiControleur {
             Service unService = new Service();
             Adherent ad = unService.consulterAdherent(id);
             request.setAttribute("adherant", ad);
-            destinationPage = "modifierAdherent";
+            destinationPage = "modifierAdherent2";
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "erreur";
@@ -137,14 +139,15 @@ public class MultiControleur {
         return new ModelAndView(destinationPage);
     }
 
-    @RequestMapping(value = "listerOeuvres.htm")
+    @RequestMapping(value = "listerOeuvres2.htm")
     public ModelAndView afficherOeuvres(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String destinationPage;
         try {
             // HttpSession session = request.getSession();
             Service unService = new Service();
             request.setAttribute("mesOeuvres", unService.consulterListeOeuvres());
-            destinationPage = "listerOeuvres";
+            request.setAttribute("pageName", "Oeuvres");
+            destinationPage = "listerOeuvres2";
         } catch (MonException e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "erreur";
@@ -177,12 +180,12 @@ public class MultiControleur {
         return new ModelAndView(destinationPage);
     }
 
-    @RequestMapping(value = "ajouterOeuvre.htm")
+    @RequestMapping(value = "ajouterOeuvre2.htm")
     public ModelAndView ajouterOeuvre(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String destinationPage = "";
         try {
-            destinationPage = "ajouterOeuvre";
+            destinationPage = "ajouterOeuvre2";
             Service unService = new Service();
             List<Proprietaire> proprietaires = unService.consulterListeProprietaires();
             request.setAttribute("proprietaires", proprietaires);
@@ -194,7 +197,7 @@ public class MultiControleur {
         return new ModelAndView(destinationPage);
     }
 
-    @RequestMapping(value = "modifierOeuvre.htm")
+    @RequestMapping(value = "modifierOeuvre2.htm")
     public ModelAndView modifierOeuvre(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String destinationPage = "";
@@ -205,7 +208,7 @@ public class MultiControleur {
             Oeuvrevente ov = unService.rechercherOeuvreIdParam(id);
             request.setAttribute("oeuvre", ov);
             request.setAttribute("proprietaires", unService.consulterListeProprietaires());
-            destinationPage = "modifierOeuvre";
+            destinationPage = "modifierOeuvre2";
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "erreur";
@@ -285,12 +288,12 @@ public class MultiControleur {
         return new ModelAndView(destinationPage);
     }
 
-    @RequestMapping(value = "reserverOeuvre.htm")
+    @RequestMapping(value = "ajouterReservation2.htm")
     public ModelAndView ajouterReservation(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String destinationPage = "";
         try {
-            destinationPage = "reserverOeuvre";
+            destinationPage = "ajouterReservation2";
             Service unService = new Service();
             List<Adherent> adherents = unService.consulterListeAdherents();
             List<Oeuvrevente> oeuvres = unService.consulterListeOeuvres();
@@ -304,14 +307,14 @@ public class MultiControleur {
         return new ModelAndView(destinationPage);
     }
 
-    @RequestMapping(value = "listerReservations.htm")
+    @RequestMapping(value = "listerReservations2.htm")
     public ModelAndView listerReservations(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String destinationPage;
         try {
             // HttpSession session = request.getSession();
             Service unService = new Service();
             request.setAttribute("reservations", unService.consulterListeReservations());
-            destinationPage = "listerReservations";
+            destinationPage = "listerReservations2";
         } catch (MonException e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "erreur";
@@ -320,7 +323,7 @@ public class MultiControleur {
         return new ModelAndView(destinationPage);
     }
 
-    @RequestMapping(value = "modifierReservation.htm")
+    @RequestMapping(value = "modifierReservation2.htm")
     public ModelAndView modifierReservation(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String destinationPage = "";
@@ -332,7 +335,7 @@ public class MultiControleur {
             Reservation resa = unService.rechercherReservation(idOeuvre, idAdherent);
 
             request.setAttribute("reservation", resa);
-            destinationPage = "modifierReservation";
+            destinationPage = "modifierReservation2";
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "erreur";
@@ -428,6 +431,8 @@ public class MultiControleur {
     public ModelAndView home2(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String destinationPage = "home2";
+
+        request.setAttribute("pageName", "Tableau de bord");
 
         return new ModelAndView(destinationPage);
     }

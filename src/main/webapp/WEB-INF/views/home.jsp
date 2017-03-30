@@ -43,6 +43,10 @@
                 face="Arial">Lister réservations</font></a><font face="Arial">
         </font>
         </li>
+        <li><a href="home2.htm"><font
+                face="Arial">Home 2</font></a><font face="Arial">
+        </font>
+        </li>
     </ul>
     </body>
 </html>
