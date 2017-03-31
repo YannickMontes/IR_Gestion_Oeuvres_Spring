@@ -1,75 +1,109 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Modifier une oeuvre</title>
-</head>
-<SCRIPT language="Javascript" type="text/javascript">
-    <script type="text/javascript" src="js/foncControle.js"></script>
 
+<!doctype html>
+<html lang="fr">
+<head>
+    <%@include file="snippets/header.jsp" %>
+</head>
 
 <body>
-<H1> Modification d'une oeuvre </H1>
+    <div class="wrapper">
+        <%@include file="snippets/sidebar.jsp" %>
 
-<DIV align="center">
-    <FORM name='identification' method="post" action="/modifierOeuvreDB.htm">
-        <P align="left"><FONT face="Arial" color="#004080"></FONT>
-            <FONT face="Arial" color="#004080"> <BR>&nbsp; &nbsp; &nbsp; Titre de l'oeuvre : </FONT>
-            <INPUT type="text" name="txttitre" value=${oeuvre.titreOeuvrevente} id="title"> <BR>
+        <div class="main-panel">
+            <%@include file="snippets/navbar.jsp" %>
 
-            <FONT face="Arial" color="#004080">
-                <BR>Prix de l'oeuvre : </FONT>
-            <input type="number" name="numPrix" id="price" min="0" value="${oeuvre.prixOeuvrevente}" step="0.01">
-            <BR>
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="header">
+                                    <h4 class="title">Modifier une oeuvre</h4>
+                                </div>
+                                <div class="content">
+                                    <form name='identification' method="post" action="modifierOeuvreDB.htm">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Titre</label>
+                                                    <input type="hidden" name="id" value=${oeuvre.idOeuvrevente} />
+                                                    <input type="text" class="form-control" value="${oeuvre.titreOeuvrevente}" name="txttitre" id="title" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Prix (€)</label>
+                                                    <input type="number" class="form-control" name="numPrix" id="price" min="0" step="0.01" value="${oeuvre.prixOeuvrevente}" required>
+                                                </div>
+                                            </div>
+                                        </div>
 
-            <FONT face="Arial" color="#004080"> <BR>&nbsp; &nbsp; &nbsp; État :</FONT>
-            <select name="etat" >
-                <c:choose>
-                    <c:when test="${oeuvre.etatOeuvrevente=='L'}">
-                        <option value="L" selected>L</option>
-                    </c:when>
-                    <c:otherwise>
-                        <option value="L">L</option>
-                    </c:otherwise>
-                </c:choose>
-                <c:choose>
-                    <c:when test="${oeuvre.etatOeuvrevente=='R'}">
-                        <option value="R" selected>R</option>
-                    </c:when>
-                    <c:otherwise>
-                        <option value="R">R</option>
-                    </c:otherwise>
-                </c:choose>
-            </select>
-            <BR>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>État</label>
+                                                    <select name="etat" required>
+                                                        <c:choose>
+                                                            <c:when test="${oeuvre.etatOeuvrevente=='L'}">
+                                                                <option value="L" selected>L</option>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <option value="L">L</option>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                        <c:choose>
+                                                            <c:when test="${oeuvre.etatOeuvrevente=='R'}">
+                                                                <option value="R" selected>R</option>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <option value="R">R</option>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
 
-            <FONT face="Arial" color="#004080"> <BR>&nbsp; &nbsp; &nbsp; Propriétaire :</FONT>
-            <select name="proprietaire" >
-                <c:forEach items="${proprietaires}" var="item">
-                    <c:choose>
-                        <c:when test="${item.idProprietaire==oeuvre.proprietaire.idProprietaire}">
-                            <option value="${item.idProprietaire}" selected>${item.nomProprietaire}</option>
-                        </c:when>
-                        <c:otherwise>
-                            <option value="${item.idProprietaire}">${item.nomProprietaire}</option>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-            </select>
-            <FONT face="Arial" color="#004080"> <BR></FONT><BR>
-            <input type="HIDDEN" name="id" value=${oeuvre.idOeuvrevente} s>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Propritétaire</label>
+                                                    <select name="proprietaire" required>
+                                                        <c:forEach items="${proprietaires}" var="item">
+                                                            <c:choose>
+                                                                <c:when test="${item.idProprietaire==oeuvre.proprietaire.idProprietaire}">
+                                                                    <option value="${item.idProprietaire}" selected>${item.nomProprietaire}</option>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <option value="${item.idProprietaire}">${item.nomProprietaire}</option>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
 
-            <!-- Boutons Ajouter -->
-            <INPUT type="submit" name="bt" value="Modifer">
-            <FONT face="Arial" color="#004080"></FONT>
-            &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <button type="submit" class="btn btn-info btn-fill pull-right" name="bt">Modifier</button>
+                                        <a href="home.htm"><button class="btn btn-warning btn-fill pull-right" name="bt">Annuler</button></a>
+                                        <div class="clearfix"></div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        </P>
-    </FORM>
-</DIV>
-<BR>
+            <%@include file="snippets/footer.jsp" %>
+        </div>
+    </div>
 </body>
+
+<%@include file="snippets/scripts.jsp" %>
+
 </html>

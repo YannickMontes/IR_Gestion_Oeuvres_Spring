@@ -1,40 +1,70 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Modifier un  adhérent</title>
-</head>
-<SCRIPT language="Javascript" type="text/javascript">
-    <script type="text/javascript" src="js/foncControle.js"></script>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<!doctype html>
+<html lang="fr">
+<head>
+    <%@include file="snippets/header.jsp" %>
+</head>
 
 <body>
-<H1> Modification d'un adhérent </H1>
+    <div class="wrapper">
+        <%@include file="snippets/sidebar.jsp" %>
 
-<DIV align="center">
-    <FORM  name='identification' method="post" action="modifierAdherentDB.htm" onsubmit="return teste()">
-        <c:set var="adherant"  scope="page" />
-        <P align="left"><FONT face="Arial" color="#004080"></FONT>
-            <FONT face="Arial" color="#004080"> <BR>&nbsp;  &nbsp;  &nbsp; Nom de l'adherent : </FONT>
-            <INPUT type="text" name="txtnom" value=${adherant.nomAdherent}  id ="nom"> <BR>
-            <FONT face="Arial" color="#004080"> <BR>Prenom de l'adherent : </FONT>
-            <INPUT type="text" name="txtprenom"  id ="prenom" value=${adherant.prenomAdherent} > <BR>
+        <div class="main-panel">
+            <%@include file="snippets/navbar.jsp" %>
 
-            <FONT face="Arial" color="#004080"> <BR>&nbsp;  &nbsp;  &nbsp; Ville de l'adherent :</FONT>
-            <INPUT type="text" name="txtville" id ="ville" value=${adherant.villeAdherent}>
-            <FONT face="Arial" color="#004080">	<BR></FONT><BR>
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="header">
+                                    <h4 class="title">Ajouter un adhérent</h4>
+                                </div>
+                                <div class="content">
+                                    <form name='identification' method="post" action="modifierAdherentDB.htm">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Nom</label>
+                                                    <input type="text" class="form-control" value="${adherant.nomAdherent}" name="txtnom" id ="nom" required>
+                                                    <input type="hidden" name="id" value="${adherant.idAdherent}" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Prénom</label>
+                                                    <input type="text" class="form-control" value="${adherant.prenomAdherent}" name="txtprenom" id ="prenom" required>
+                                                </div>
+                                            </div>
+                                        </div>
 
-            <input type="HIDDEN" name="id" value=${adherant.idAdherent} s>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Ville</label>
+                                                    <input type="text" class="form-control" value="${adherant.villeAdherent}" name="txtville" id ="ville" required>
+                                                </div>
+                                            </div>
+                                        </div>
 
-            <INPUT type="submit" name="annuler"  value="Annuler">
-            <INPUT type="submit" name="bt"  value="Modifier" >
-            <FONT face="Arial" color="#004080"></FONT>
-            &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        </P>
-    </FORM>
-</DIV>
-<BR>
+                                        <button type="submit" class="btn btn-info btn-fill pull-right" name="bt">Modifier</button>
+                                        <a href="home.htm"><button class="btn btn-warning btn-fill pull-right" name="bt">Annuler</button></a>
+                                        <div class="clearfix"></div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <%@include file="snippets/footer.jsp" %>
+        </div>
+    </div>
 </body>
+
+<%@include file="snippets/scripts.jsp" %>
+
 </html>

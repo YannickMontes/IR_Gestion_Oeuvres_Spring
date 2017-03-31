@@ -150,6 +150,11 @@ public class Service {
         return consulterListeOeuvres(mysql, null);
     }
 
+    public List<Oeuvrevente> consulterListeOeuvresLibres() throws MonException {
+        String mysql = "select * from oeuvrevente WHERE etat_oeuvrevente = 'L'";
+        return consulterListeOeuvres(mysql, null);
+    }
+
 
     private List<Oeuvrevente> consulterListeOeuvres(String mysql, Map params) throws MonException {
         List<Object> rs;

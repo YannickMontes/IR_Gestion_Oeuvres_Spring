@@ -1,51 +1,89 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<!doctype html>
+<html lang="fr">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Ajouter une oeuvre</title>
+    <%@include file="snippets/header.jsp" %>
 </head>
 
-
 <body>
-<H1> Ajout d'une oeuvre </H1>
+    <div class="wrapper">
+        <%@include file="snippets/sidebar.jsp" %>
 
-<DIV align="center">
-    <FORM name='identification' method="post" action="insererOeuvre.htm">
-        <P align="left"><FONT face="Arial" color="#004080"></FONT>
-            <FONT face="Arial" color="#004080"> <BR>&nbsp; &nbsp; &nbsp; Titre de l'oeuvre : </FONT>
-            <INPUT type="text" name="txttitre" value="" id="title"> <BR>
+        <div class="main-panel">
+            <%@include file="snippets/navbar.jsp" %>
 
-            <FONT face="Arial" color="#004080">
-            <BR>Prix de l'oeuvre : </FONT>
-            <input type="number" name="numPrix" id="price" min="0" value="0" step="0.01">
-            <BR>
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="header">
+                                    <h4 class="title">Ajouter une oeuvre</h4>
+                                </div>
+                                <div class="content">
+                                    <form name='identification' method="post" action="insererOeuvre.htm">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Titre</label>
+                                                    <input type="text" class="form-control" placeholder="Titre de l'oeuvre" name="txttitre" id="title" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Prix (€)</label>
+                                                    <input type="number" class="form-control" name="numPrix" id="price" min="0" value="0" step="0.01" required>
+                                                </div>
+                                            </div>
+                                        </div>
 
-            <FONT face="Arial" color="#004080"> <BR>&nbsp; &nbsp; &nbsp; État :</FONT>
-            <select name="etat" >
-                <option value="L">L</option>
-                <option value="R">R</option>
-            </select>
-            <BR>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>État</label>
+                                                    <select name="etat" required>
+                                                        <option selected="true" disabled="disabled" value="L">Choisir un état</option>
+                                                        <option value="L">L</option>
+                                                        <option value="R">R</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
 
-            <FONT face="Arial" color="#004080"> <BR>&nbsp; &nbsp; &nbsp; Propriétaire :</FONT>
-            <select name="proprietaire" >
-                <c:forEach items="${proprietaires}" var="item">
-                    <option value="${item.idProprietaire}">${item.nomProprietaire}</option>
-                </c:forEach>
-            </select>
-            <FONT face="Arial" color="#004080"> <BR></FONT><BR>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Propritétaire</label>
+                                                    <select name="proprietaire" required>
+                                                        <option selected="true" disabled="disabled" value="L">Choisir un propriétaire</option>
+                                                        <c:forEach items="${proprietaires}" var="item">
+                                                            <option value="${item.idProprietaire}">${item.nomProprietaire}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
 
-            <!-- Boutons Ajouter -->
-            <INPUT type="submit" name="bt" value="Ajouter">
-            <FONT face="Arial" color="#004080"></FONT>
-            &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <button type="submit" class="btn btn-info btn-fill pull-right" name="bt">Ajouter</button>
+                                        <a href="home.htm"><button class="btn btn-warning btn-fill pull-right" name="bt">Annuler</button></a>
+                                        <div class="clearfix"></div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        </P>
-    </FORM>
-</DIV>
-<BR>
+            <%@include file="snippets/footer.jsp" %>
+        </div>
+    </div>
 </body>
+
+<%@include file="snippets/scripts.jsp" %>
+
 </html>

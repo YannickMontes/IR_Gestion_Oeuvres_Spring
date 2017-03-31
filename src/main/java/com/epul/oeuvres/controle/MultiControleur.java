@@ -25,18 +25,19 @@ import java.util.List;
 @Controller
 public class MultiControleur {
 
-//	private static final Logger logger = LoggerFactory.getLogger(MultiControleur.class);
-
-    @RequestMapping(value = "listerAdherent2.htm")
-    public ModelAndView afficherLesStages(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    // /
+    // / Liste les adhérents
+    // /
+    @RequestMapping(value = "listerAdherents.htm")
+    public ModelAndView listerAdherents(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String destinationPage;
         try {
-            // HttpSession session = request.getSession();
             Service unService = new Service();
             request.setAttribute("mesAdherents", unService.consulterListeAdherents());
             request.setAttribute("pageName", "Adhérents");
+            request.setAttribute("pageName", "Liste des adhérents");
 
-            destinationPage = "listerAdherent2";
+            destinationPage = "listerAdherents";
         } catch (MonException e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "erreur";
@@ -45,6 +46,9 @@ public class MultiControleur {
         return new ModelAndView(destinationPage);
     }
 
+    // /
+    // / Insère  l'adhérent en BDD
+    // /
     @RequestMapping(value = "insererAdherent.htm")
     public ModelAndView insererAdherent(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -60,16 +64,22 @@ public class MultiControleur {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "erreur";
         }
-        destinationPage = "home";
+        listerAdherents(request, response);
+        destinationPage = "listerAdherents";
+        request.setAttribute("success", true);
         return new ModelAndView(destinationPage);
     }
 
-    @RequestMapping(value = "ajouterAdherent2.htm")
+    // /
+    // / Affiche le formulaire d'ajout d'un adhérent
+    // /
+    @RequestMapping(value = "ajouterAdherent.htm")
     public ModelAndView ajouterAdherent(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String destinationPage = "";
+        request.setAttribute("pageName", "Ajouter un adhérent");
         try {
-            destinationPage = "ajouterAdherent2";
+            destinationPage = "ajouterAdherent";
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "erreur";
@@ -78,9 +88,11 @@ public class MultiControleur {
         return new ModelAndView(destinationPage);
     }
 
-    @RequestMapping(value = "modifierAdherent2.htm")
+    // /
+    // / Affiche le formulaire de modification de l'adhérent
+    // /
+    @RequestMapping(value = "modifierAdherent.htm")
     public ModelAndView modifierAdherent(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
         String destinationPage = "";
         int id = Integer.parseInt(request.getParameter("id"));
 
@@ -88,7 +100,8 @@ public class MultiControleur {
             Service unService = new Service();
             Adherent ad = unService.consulterAdherent(id);
             request.setAttribute("adherant", ad);
-            destinationPage = "modifierAdherent2";
+            destinationPage = "modifierAdherent";
+            request.setAttribute("pageName", "Modifier un adhérent");
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "erreur";
@@ -97,6 +110,9 @@ public class MultiControleur {
         return new ModelAndView(destinationPage);
     }
 
+    // /
+    // / Modifie l'adhérent en BDD
+    // /
     @RequestMapping(value = "modifierAdherentDB.htm")
     public ModelAndView modifierAdherentDB(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -111,7 +127,9 @@ public class MultiControleur {
             ad.setVilleAdherent(request.getParameter("txtville"));
 
             unService.modifierAdherent(ad);
-            destinationPage = "home";
+            listerAdherents(request, response);
+            destinationPage = "listerAdherents";
+            request.setAttribute("success", true);
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "erreur";
@@ -120,6 +138,9 @@ public class MultiControleur {
         return new ModelAndView(destinationPage);
     }
 
+    // /
+    // / Supprime l'adherent en BDD
+    // /
     @RequestMapping(value = "supprimerAdherent.htm")
     public ModelAndView supprimerAdherentDB(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -130,7 +151,9 @@ public class MultiControleur {
             Service unService = new Service();
 
             unService.supprimerAdherent(id);
-            destinationPage = "home";
+            listerAdherents(request, response);
+            destinationPage = "listerAdherents";
+            request.setAttribute("success", true);
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "erreur";
@@ -139,15 +162,18 @@ public class MultiControleur {
         return new ModelAndView(destinationPage);
     }
 
-    @RequestMapping(value = "listerOeuvres2.htm")
+    // /
+    // / Liste les oeuvres
+    // /
+    @RequestMapping(value = "listerOeuvres.htm")
     public ModelAndView afficherOeuvres(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String destinationPage;
         try {
-            // HttpSession session = request.getSession();
             Service unService = new Service();
             request.setAttribute("mesOeuvres", unService.consulterListeOeuvres());
             request.setAttribute("pageName", "Oeuvres");
-            destinationPage = "listerOeuvres2";
+            destinationPage = "listerOeuvres";
+            request.setAttribute("pageName", "Lister les oeuvres");
         } catch (MonException e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "erreur";
@@ -156,14 +182,15 @@ public class MultiControleur {
         return new ModelAndView(destinationPage);
     }
 
-
+    // /
+    // / Insère  l'oeuvre en BDD
+    // /
     @RequestMapping(value = "insererOeuvre.htm")
     public ModelAndView insererOeuvre(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String destinationPage = "";
         try {
             Service unService = new Service();
-
             Oeuvrevente ov = new Oeuvrevente();
 
             ov.setTitreOeuvrevente(request.getParameter("txttitre"));
@@ -176,19 +203,26 @@ public class MultiControleur {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "erreur";
         }
-        destinationPage = "home";
+        afficherOeuvres(request, response);
+        destinationPage = "listerOeuvres";
+        request.setAttribute("success", true);
+
         return new ModelAndView(destinationPage);
     }
 
-    @RequestMapping(value = "ajouterOeuvre2.htm")
+    // /
+    // / Affiche le formulaire d'ajout d'une oeuvre
+    // /
+    @RequestMapping(value = "ajouterOeuvre.htm")
     public ModelAndView ajouterOeuvre(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String destinationPage = "";
         try {
-            destinationPage = "ajouterOeuvre2";
+            destinationPage = "ajouterOeuvre";
             Service unService = new Service();
             List<Proprietaire> proprietaires = unService.consulterListeProprietaires();
             request.setAttribute("proprietaires", proprietaires);
+            request.setAttribute("pageName", "Ajouter une oeuvre");
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "erreur";
@@ -197,7 +231,10 @@ public class MultiControleur {
         return new ModelAndView(destinationPage);
     }
 
-    @RequestMapping(value = "modifierOeuvre2.htm")
+    // /
+    // / Affiche le formulaire de modification de l'oeuvre
+    // /
+    @RequestMapping(value = "modifierOeuvre.htm")
     public ModelAndView modifierOeuvre(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String destinationPage = "";
@@ -208,7 +245,8 @@ public class MultiControleur {
             Oeuvrevente ov = unService.rechercherOeuvreIdParam(id);
             request.setAttribute("oeuvre", ov);
             request.setAttribute("proprietaires", unService.consulterListeProprietaires());
-            destinationPage = "modifierOeuvre2";
+            destinationPage = "modifierOeuvre";
+            request.setAttribute("pageName", "Modifier une oeuvre");
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "erreur";
@@ -217,6 +255,9 @@ public class MultiControleur {
         return new ModelAndView(destinationPage);
     }
 
+    // /
+    // / Modifie l'oeuvre en BDD
+    // /
     @RequestMapping(value = "modifierOeuvreDB.htm")
     public ModelAndView modifierOeuvreDB(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -233,7 +274,9 @@ public class MultiControleur {
             ov.setProprietaire(unService.rechercherProprietaire(Integer.parseInt(request.getParameter("proprietaire"))));
 
             unService.modifierOeuvre(ov);
-            destinationPage = "home";
+            afficherOeuvres(request, response);
+            destinationPage = "listerOeuvres";
+            request.setAttribute("success", true);
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "erreur";
@@ -242,6 +285,9 @@ public class MultiControleur {
         return new ModelAndView(destinationPage);
     }
 
+    // /
+    // / Supprime l'oeuvre en BDD
+    // /
     @RequestMapping(value = "supprimerOeuvre.htm")
     public ModelAndView supprimerOeuvreDB(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -252,7 +298,9 @@ public class MultiControleur {
             Service unService = new Service();
 
             unService.supprimerOeuvre(id);
-            destinationPage = "home";
+            afficherOeuvres(request, response);
+            destinationPage = "listerOeuvres";
+            request.setAttribute("success", true);
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "erreur";
@@ -261,6 +309,9 @@ public class MultiControleur {
         return new ModelAndView(destinationPage);
     }
 
+    // /
+    // / Insère  la réservation en BDD
+    // /
     @RequestMapping(value = "insererReservation.htm")
     public ModelAndView insererReservation(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -284,16 +335,23 @@ public class MultiControleur {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "erreur";
         }
-        destinationPage = "home";
+        listerReservations(request, response);
+        destinationPage = "listerReservations";
+        request.setAttribute("success", true);
+
         return new ModelAndView(destinationPage);
     }
 
-    @RequestMapping(value = "ajouterReservation2.htm")
+    // /
+    // / Affiche le formulaire d'ajout de la réservation
+    // /
+    @RequestMapping(value = "ajouterReservation.htm")
     public ModelAndView ajouterReservation(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String destinationPage = "";
         try {
-            destinationPage = "ajouterReservation2";
+            destinationPage = "ajouterReservation";
+            request.setAttribute("pageName", "Ajouter une réservation");
             Service unService = new Service();
             List<Adherent> adherents = unService.consulterListeAdherents();
             List<Oeuvrevente> oeuvres = unService.consulterListeOeuvres();
@@ -307,14 +365,17 @@ public class MultiControleur {
         return new ModelAndView(destinationPage);
     }
 
-    @RequestMapping(value = "listerReservations2.htm")
+    // /
+    // / Liste les réservations
+    // /
+    @RequestMapping(value = "listerReservations.htm")
     public ModelAndView listerReservations(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String destinationPage;
         try {
-            // HttpSession session = request.getSession();
             Service unService = new Service();
             request.setAttribute("reservations", unService.consulterListeReservations());
-            destinationPage = "listerReservations2";
+            destinationPage = "listerReservations";
+            request.setAttribute("pageName", "Lister les réservations");
         } catch (MonException e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "erreur";
@@ -323,9 +384,11 @@ public class MultiControleur {
         return new ModelAndView(destinationPage);
     }
 
-    @RequestMapping(value = "modifierReservation2.htm")
+    // /
+    // / Affiche le formulaire de modification de la réservation
+    // /
+    @RequestMapping(value = "modifierReservation.htm")
     public ModelAndView modifierReservation(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
         String destinationPage = "";
         int idOeuvre = Integer.parseInt(request.getParameter("iOeuvre"));
         int idAdherent = Integer.parseInt(request.getParameter("idAdherent"));
@@ -335,7 +398,8 @@ public class MultiControleur {
             Reservation resa = unService.rechercherReservation(idOeuvre, idAdherent);
 
             request.setAttribute("reservation", resa);
-            destinationPage = "modifierReservation2";
+            destinationPage = "modifierReservation";
+            request.setAttribute("pageName", "Modifier une réservation");
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "erreur";
@@ -344,6 +408,9 @@ public class MultiControleur {
         return new ModelAndView(destinationPage);
     }
 
+    // /
+    // / Modifie la réservation en BDD
+    // /
     @RequestMapping(value = "modifierReservationDB.htm")
     public ModelAndView modifierReservationDB(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -367,7 +434,9 @@ public class MultiControleur {
             res.setOeuvrevente(unService.rechercherOeuvreIdParam(idOeuvre));
 
             unService.modifierReservation(res);
-            destinationPage = "home";
+            listerReservations(request, response);
+            destinationPage = "listerReservations";
+            request.setAttribute("success", true);
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "erreur";
@@ -376,6 +445,9 @@ public class MultiControleur {
         return new ModelAndView(destinationPage);
     }
 
+    // /
+    // / Supprime la réservation en BDD
+    // /
     @RequestMapping(value = "supprimerReservation.htm")
     public ModelAndView supprimerReservation(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -387,7 +459,9 @@ public class MultiControleur {
             Service unService = new Service();
 
             unService.supprimerReservation(idOeuvre, idAdherent);
-            destinationPage = "home";
+            listerReservations(request, response);
+            destinationPage = "listerReservations";
+            request.setAttribute("success", true);
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "erreur";
@@ -396,9 +470,11 @@ public class MultiControleur {
         return new ModelAndView(destinationPage);
     }
 
+    // /
+    // / Confirmer la réservation en BDD
+    // /
     @RequestMapping(value = "confirmerReservation.htm")
     public ModelAndView confirmerReservation(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
         String destinationPage = "";
         int idOeuvre = Integer.parseInt(request.getParameter("iOeuvre"));
         int idAdherent = Integer.parseInt(request.getParameter("idAdherent"));
@@ -409,7 +485,9 @@ public class MultiControleur {
             res.setStatut("confirmee");
 
             unService.modifierReservation(res);
-            destinationPage = "home";
+            listerReservations(request, response);
+            destinationPage = "listerReservations";
+            request.setAttribute("success", true);
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "erreur";
@@ -418,62 +496,35 @@ public class MultiControleur {
         return new ModelAndView(destinationPage);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-    @RequestMapping(value = "home2.htm")
+    // /
+    // / Affichage de la page d'accueil
+    // /
+    @RequestMapping(value = {"/","home"})
     public ModelAndView home2(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        String destinationPage = "home2";
+        String destinationPage = "home";
 
         request.setAttribute("pageName", "Tableau de bord");
+
+        try {
+            Service unService = new Service();
+
+            request.setAttribute("nbOeuvres", unService.consulterListeOeuvres().size());
+            request.setAttribute("nbAdherents", unService.consulterListeAdherents().size());
+            request.setAttribute("nbOeuvresLibres", unService.consulterListeOeuvresLibres().size());
+        } catch (Exception e) {
+
+        }
 
         return new ModelAndView(destinationPage);
     }
 
-
-
-
-
-
-
-
-
-
-
-
     // /
-    // / Affichage de la page d'accueil
-    // /
-    @RequestMapping(value = "index.htm", method = RequestMethod.GET)
-    public ModelAndView Afficheindex(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return new ModelAndView("home");
-    }
-
-    // /
-    // / Affichage de la page d'accueil
-    // /
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView Afficheindex2(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return new ModelAndView("home");
-    }
-
-    // /
-    // / Affichage de la page d'accueil
+    // / Affichage de la page d'erreur
     // /
     @RequestMapping(value = "erreur.htm", method = RequestMethod.GET)
     public ModelAndView AfficheErreur(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request.setAttribute("pageName", "Erreur");
+
         return new ModelAndView("erreur");
     }
-
-
 }

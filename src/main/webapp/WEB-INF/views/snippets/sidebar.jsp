@@ -8,32 +8,32 @@
     -->
     <div class="sidebar-wrapper">
         <div class="logo">
-            <a href="http://www.creative-tim.com" class="simple-text">
-                Médiatèque Polytech - Admin
+            <a href="#" class="simple-text">
+                Médiatèque Polytech - Administration
             </a>
         </div>
 
         <ul class="nav">
             <li>
-                <a href="home2.htm">
+                <a href="home.htm">
                     <i class="pe-7s-graph"></i>
                     <p>Tableau de bord</p>
                 </a>
             </li>
             <li>
-                <a href="listerAdherent2.htm">
+                <a href="listerAdherents.htm">
                     <i class="pe-7s-user"></i>
                     <p>Adhérents</p>
                 </a>
             </li>
             <li>
-                <a href="listerOeuvres2.htm">
+                <a href="listerOeuvres.htm">
                     <i class="pe-7s-photo"></i>
                     <p>Oeuvres</p>
                 </a>
             </li>
             <li>
-                <a href="listerReservations2.htm">
+                <a href="listerReservations.htm">
                     <i class="pe-7s-note2"></i>
                     <p>Réservations</p>
                 </a>

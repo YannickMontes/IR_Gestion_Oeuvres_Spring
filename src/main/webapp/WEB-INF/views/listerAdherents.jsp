@@ -39,7 +39,7 @@
                                                 <td>${item.prenomAdherent}</td>
                                                 <td>${item.villeAdherent}</td>
                                                 <td>
-                                                    <a href="modifierAdherent2.htm?id=${item.idAdherent}"><button class="btn btn-warning"><i class="pe-7s-edit"></i> Modifier</button></a>
+                                                    <a href="modifierAdherent.htm?id=${item.idAdherent}"><button class="btn btn-warning"><i class="pe-7s-edit"></i> Modifier</button></a>
                                                     <a href="supprimerAdherent.htm?id=${item.idAdherent}"><button class="btn btn-danger"><i class="pe-7s-trash"></i> Supprimer</button></a>
                                                 </td>
                                             </tr>
@@ -48,7 +48,7 @@
                                 </table>
                             </div>
                         </div>
-                        <a href="ajouterAdherent2.htm">
+                        <a href="ajouterAdherent.htm">
                             <button class="btn btn-info btn-fill btn-block"><i class="pe-7s-plus"></i> Ajouter un adhérent</button>
                         </a>
                     </div>
@@ -59,22 +59,24 @@
         <%@include file="snippets/footer.jsp" %>
     </div>
 </div>
-
+<input type="hidden" id="success-hiddenInput" value="${success}"/>
 
 </body>
 
-    <!--   Core JS Files   -->
-    <script src="assets/js/jquery-1.10.2.js" type="text/javascript"></script>
-	<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+<%@include file="snippets/scripts.jsp" %>
 
-	<!--  Checkbox, Radio & Switch Plugins -->
-	<script src="assets/js/bootstrap-checkbox-radio-switch.js"></script>
-
-    <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
-	<script src="assets/js/light-bootstrap-dashboard.js"></script>
-
-	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
-	<script src="assets/js/demo.js"></script>
-
+<script type="text/javascript">
+    $(document).ready(function(){
+        if ($("#success-hiddenInput").val() == 'true') {
+            $.notify({
+                icon: 'pe-7s-like2',
+                message: "Succès - Opération réussie!"
+            },{
+                type: 'success',
+                timer: 2000
+            });
+        }
+    });
+</script>
 
 </html>

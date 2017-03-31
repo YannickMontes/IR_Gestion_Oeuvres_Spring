@@ -1,46 +1,87 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+
+<!doctype html>
+<html lang="fr">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Affichage de toutes les réservations</title>
+    <%@include file="snippets/header.jsp" %>
 </head>
 <body>
-<P>
-    <A href="index.htm"><FONT face="Arial" color="#004080">Retour
-        Accueil</FONT></A>
-</P>
-<P align="center">
-    <FONT face="Arial" size="5" color="#004080"><U> <STRONG>Listing&nbsp;des
-        réservations </STRONG></U></FONT>
-</P>
 
-<TABLE BORDER="1">
-    <CAPTION>Tableau des réservations</CAPTION>
-    <TR>
-        <TH>Oeuvre</TH>
-        <TH>Adhérent</TH>
-        <TH>Date</TH>
-        <TH>Statut</TH>
-        <TH>Modifier</TH>
-        <TH>Supprimer</TH>
-        <TH>Confirmer</TH>
-    </TR>
+<div class="wrapper">
+    <%@include file="snippets/sidebar.jsp" %>
 
-    <c:forEach items="${reservations}" var="reservation">
-        <tr>
-            <td>${reservation.oeuvrevente.titreOeuvrevente}</td>
-            <td>${reservation.adherent.nomAdherent}</td>
-            <td>${reservation.dateDisplayed}</td>
-            <td>${reservation.statut}</td>
-            <td><a href="modifierReservation.htm?iOeuvre=${reservation.oeuvrevente.idOeuvrevente}&idAdherent=${reservation.adherent.idAdherent}"><font face="Arial">Modifier une réservation</font></a><font face="Arial"> </font></td>
-            <td><a href="supprimerReservation.htm?iOeuvre=${reservation.oeuvrevente.idOeuvrevente}&idAdherent=${reservation.adherent.idAdherent}"><font face="Arial">Supprimer une réservation</font></a><font face="Arial"> </font></td>
-            <td><a href="confirmerReservation.htm?iOeuvre=${reservation.oeuvrevente.idOeuvrevente}&idAdherent=${reservation.adherent.idAdherent}"><font face="Arial">Confirmer la réservation</font></a><font face="Arial"> </font></td>
-        </tr>
-    </c:forEach>
-</TABLE>
+    <div class="main-panel">
+        <%@include file="snippets/navbar.jsp" %>
+
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Liste des réservations</h4>
+                            </div>
+                            <div class="content table-responsive table-full-width">
+                                <table class="table table-hover table-striped">
+                                    <thead>
+                                        <th>Oeuvre</th>
+                                    	<th>Adhérent</th>
+                                    	<th>Date</th>
+                                    	<th>Statut</th>
+                                    	<th>Options</th>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${reservations}" var="reservation">
+                                            <tr>
+                                                <td>${reservation.oeuvrevente.titreOeuvrevente}</td>
+                                                <td>${reservation.adherent.nomAdherent}</td>
+                                                <td>${reservation.dateDisplayed}</td>
+                                                <td>${reservation.statut}</td>
+                                                <td>
+                                                    <a href="modifierReservation.htm?iOeuvre=${reservation.oeuvrevente.idOeuvrevente}&idAdherent=${reservation.adherent.idAdherent}"><button class="btn btn-warning"><i class="pe-7s-edit"></i> Modifier</button></a>
+                                                    <a href="supprimerReservation.htm?iOeuvre=${reservation.oeuvrevente.idOeuvrevente}&idAdherent=${reservation.adherent.idAdherent}"><button class="btn btn-danger"><i class="pe-7s-trash"></i> Supprimer</button></a>
+                                                    <c:choose>
+                                                        <c:when test="${reservation.statut != 'confirmee'}">
+                                                            <a href="confirmerReservation.htm?iOeuvre=${reservation.oeuvrevente.idOeuvrevente}&idAdherent=${reservation.adherent.idAdherent}"><button class="btn btn-success"><i class="pe-7s-like2"></i> Confirmer</button></a>
+                                                        </c:when>
+                                                    </c:choose>
+                                                 </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <a href="ajouterReservation.htm">
+                            <button class="btn btn-info btn-fill btn-block"><i class="pe-7s-plus"></i> Ajouter une réservation</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%@include file="snippets/footer.jsp" %>
+    </div>
+</div>
+<input type="hidden" id="success-hiddenInput" value="${success}"/>
+
 </body>
+
+<%@include file="snippets/scripts.jsp" %>
+<script type="text/javascript">
+    $(document).ready(function(){
+        if ($("#success-hiddenInput").val() == 'true') {
+            $.notify({
+                icon: 'pe-7s-like2',
+                message: "Succès - Opération réussie!"
+            },{
+                type: 'success',
+                timer: 2000
+            });
+        }
+    });
+</script>
+
 </html>

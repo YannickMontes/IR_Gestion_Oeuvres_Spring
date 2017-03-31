@@ -1,39 +1,69 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Ajouter un  adhérent</title>
-</head>
-<SCRIPT language="Javascript" type="text/javascript">
-<script type="text/javascript" src="js/foncControle.js"></script>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<!doctype html>
+<html lang="fr">
+<head>
+    <%@include file="snippets/header.jsp" %>
+</head>
 
 <body>
-	<H1> Ajout d'un adhérent </H1> 
+    <div class="wrapper">
+        <%@include file="snippets/sidebar.jsp" %>
 
-<DIV align="center">
-<FORM  name='identification' method="post" action="insererAdherent.htm" onsubmit="return teste()">
-     <P align="left"><FONT face="Arial" color="#004080"></FONT>     
-		<FONT face="Arial" color="#004080"> <BR>&nbsp;  &nbsp;  &nbsp; Nom de l'adherent : </FONT>
-	    <INPUT type="text" name="txtnom" value=""  id ="nom"> <BR>
-        <FONT face="Arial" color="#004080">
-		<BR>Prenom de l'adherent : </FONT>
-        <INPUT type="text" name="txtprenom"  id ="prenom"  > <BR>
-        
-        <FONT face="Arial" color="#004080"> <BR>&nbsp;  &nbsp;  &nbsp; Ville de l'adherent :</FONT>
-        <INPUT type="text" name="txtville" id ="ville">
-        <FONT face="Arial" color="#004080">	<BR></FONT><BR>
-        
-          <!-- Boutons Ajouter -->
-          
-        <INPUT type="submit" name="bt"  value="Ajouter" >
-        <FONT face="Arial" color="#004080"></FONT>
-        &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      
-</P></FORM>
-</DIV>
-<BR>
+        <div class="main-panel">
+            <%@include file="snippets/navbar.jsp" %>
+
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="header">
+                                    <h4 class="title">Ajouter un adhérent</h4>
+                                </div>
+                                <div class="content">
+                                    <form name='identification' method="post" action="insererAdherent.htm">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Nom</label>
+                                                    <input type="text" class="form-control" placeholder="Exemple : DUPONT" name="txtnom" id ="nom" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Prénom</label>
+                                                    <input type="text" class="form-control" placeholder="Exemple : Jean" name="txtprenom" id ="prenom" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Ville</label>
+                                                    <input type="text" class="form-control" placeholder="Nom de la ville" name="txtville" id ="ville" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-info btn-fill pull-right" name="bt">Ajouter</button>
+                                        <a href="home.htm"><button class="btn btn-warning btn-fill pull-right" name="bt">Annuler</button></a>
+                                        <div class="clearfix"></div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <%@include file="snippets/footer.jsp" %>
+        </div>
+    </div>
 </body>
+
+<%@include file="snippets/scripts.jsp" %>
+
 </html>
