@@ -20,36 +20,22 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="header">
-                                    <h4 class="title">Ajouter une oeuvre</h4>
+                                    <h4 class="title">Ajouter un adhérent</h4>
                                 </div>
                                 <div class="content">
-                                    <form name='identification' method="post" action="insererOeuvre.htm">
+                                    <form name='identification' method="post" action="modifierAdherentDB.htm">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>Titre</label>
-                                                    <input type="text" class="form-control" placeholder="Titre de l'oeuvre" name="txttitre" id="title" required>
+                                                    <label>Nom</label>
+                                                    <input type="text" class="form-control" value="${adherant.nomAdherent}" name="txtnom" id ="nom" required>
+                                                    <input type="hidden" name="id" value="${adherant.idAdherent}" />
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>Prix (€)</label>
-                                                    <input type="number" class="form-control" name="numPrix" id="price" min="0" value="0" step="0.01" required>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>État</label>
-                                                    <select name="etat" required>
-                                                        <option selected="true" disabled="disabled" value="L">Choisir un état</option>
-                                                        <option value="L">L</option>
-                                                        <option value="R">R</option>
-                                                    </select>
+                                                    <label>Prénom</label>
+                                                    <input type="text" class="form-control" value="${adherant.prenomAdherent}" name="txtprenom" id ="prenom" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -57,19 +43,13 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>Propritétaire</label>
-                                                    <select name="proprietaire" required>
-                                                        <option selected="true" disabled="disabled" value="L">Choisir un propriétaire</option>
-                                                        <c:forEach items="${proprietaires}" var="item">
-                                                            <option value="${item.idProprietaire}">${item.nomProprietaire}</option>
-                                                        </c:forEach>
-                                                    </select>
+                                                    <label>Ville</label>
+                                                    <input type="text" class="form-control" value="${adherant.villeAdherent}" name="txtville" id ="ville" required>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <button type="submit" class="btn btn-info btn-fill pull-right" name="bt">Ajouter</button>
-                                        <a href="home2.htm"><button class="btn btn-warning btn-fill pull-right" name="bt">Annuler</button></a>
+                                        <button type="submit" class="btn btn-info btn-fill pull-right" name="bt">Modifier</button>
                                         <div class="clearfix"></div>
                                     </form>
                                 </div>

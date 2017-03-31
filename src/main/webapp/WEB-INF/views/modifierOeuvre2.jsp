@@ -20,15 +20,16 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="header">
-                                    <h4 class="title">Ajouter une oeuvre</h4>
+                                    <h4 class="title">Modifier une oeuvre</h4>
                                 </div>
                                 <div class="content">
-                                    <form name='identification' method="post" action="insererOeuvre.htm">
+                                    <form name='identification' method="post" action="modifierOeuvreDB.htm">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Titre</label>
-                                                    <input type="text" class="form-control" placeholder="Titre de l'oeuvre" name="txttitre" id="title" required>
+                                                    <input type="hidden" name="id" value=${oeuvre.idOeuvrevente} />
+                                                    <input type="text" class="form-control" value="${oeuvre.titreOeuvrevente}" name="txttitre" id="title" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -36,7 +37,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Prix (€)</label>
-                                                    <input type="number" class="form-control" name="numPrix" id="price" min="0" value="0" step="0.01" required>
+                                                    <input type="number" class="form-control" name="numPrix" id="price" min="0" step="0.01" value="${oeuvre.prixOeuvrevente}" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -46,9 +47,22 @@
                                                 <div class="form-group">
                                                     <label>État</label>
                                                     <select name="etat" required>
-                                                        <option selected="true" disabled="disabled" value="L">Choisir un état</option>
-                                                        <option value="L">L</option>
-                                                        <option value="R">R</option>
+                                                        <c:choose>
+                                                            <c:when test="${oeuvre.etatOeuvrevente=='L'}">
+                                                                <option value="L" selected>L</option>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <option value="L">L</option>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                        <c:choose>
+                                                            <c:when test="${oeuvre.etatOeuvrevente=='R'}">
+                                                                <option value="R" selected>R</option>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <option value="R">R</option>
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                     </select>
                                                 </div>
                                             </div>
@@ -59,16 +73,22 @@
                                                 <div class="form-group">
                                                     <label>Propritétaire</label>
                                                     <select name="proprietaire" required>
-                                                        <option selected="true" disabled="disabled" value="L">Choisir un propriétaire</option>
                                                         <c:forEach items="${proprietaires}" var="item">
-                                                            <option value="${item.idProprietaire}">${item.nomProprietaire}</option>
+                                                            <c:choose>
+                                                                <c:when test="${item.idProprietaire==oeuvre.proprietaire.idProprietaire}">
+                                                                    <option value="${item.idProprietaire}" selected>${item.nomProprietaire}</option>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <option value="${item.idProprietaire}">${item.nomProprietaire}</option>
+                                                                </c:otherwise>
+                                                            </c:choose>
                                                         </c:forEach>
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <button type="submit" class="btn btn-info btn-fill pull-right" name="bt">Ajouter</button>
+                                        <button type="submit" class="btn btn-info btn-fill pull-right" name="bt">Modifier</button>
                                         <a href="home2.htm"><button class="btn btn-warning btn-fill pull-right" name="bt">Annuler</button></a>
                                         <div class="clearfix"></div>
                                     </form>

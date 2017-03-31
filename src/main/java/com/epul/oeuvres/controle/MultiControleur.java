@@ -273,7 +273,7 @@ public class MultiControleur {
             res.setAdherent(unService.consulterAdherent(Integer.parseInt(request.getParameter("adherent"))));
 
             String dateStr = request.getParameter("dateReservation");
-            SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+            SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
 
             Date dateResa = formater.parse(dateStr);
             res.setDate(dateResa);
@@ -349,19 +349,22 @@ public class MultiControleur {
 
         String destinationPage = "";
 
-
         try {
             Service unService = new Service();
             Reservation res = new Reservation();
+            int idOeuvre = Integer.parseInt(request.getParameter("oeuvre"));
+            int idAdherent = Integer.parseInt(request.getParameter("adherent"));
+            String currentStatut = unService.rechercherReservation(idOeuvre, idAdherent).getStatut();
 
             res.setAdherent(unService.consulterAdherent(Integer.parseInt(request.getParameter("adherent"))));
 
             String dateStr = request.getParameter("dateReservation");
-            SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+            SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
             Date dateResa = formater.parse(dateStr);
             res.setDate(dateResa);
+            res.setStatut(currentStatut);
 
-            res.setOeuvrevente(unService.rechercherOeuvreIdParam(Integer.parseInt(request.getParameter("oeuvre"))));
+            res.setOeuvrevente(unService.rechercherOeuvreIdParam(idOeuvre));
 
             unService.modifierReservation(res);
             destinationPage = "home";

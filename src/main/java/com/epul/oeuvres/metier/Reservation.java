@@ -63,7 +63,9 @@ public class Reservation implements Serializable {
 		this.oeuvrevente = oeuvrevente;
 	}
 
-    public String getStatut() { return this.statut; }
+    public String getStatut() {
+	    return this.statut;
+	}
 
     public void setStatut(String statut) {
         this.statut = statut;

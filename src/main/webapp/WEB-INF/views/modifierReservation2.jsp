@@ -24,17 +24,13 @@
                                     <h4 class="title">Ajouter une réservation</h4>
                                 </div>
                                 <div class="content">
-                                    <form name='identification' method="post" action="insererReservation.htm">
+                                    <form name='identification' method="post" action="modifierReservationDB.htm">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <select name="oeuvre" required>
-                                                        <label>Oeuvre</label>
-                                                        <option selected="true" disabled="disabled" value="">Choisir une oeuvre</option>
-                                                        <c:forEach items="${oeuvres}" var="item">
-                                                            <option value="${item.idOeuvrevente}">${item.titreOeuvrevente}</option>
-                                                        </c:forEach>
-                                                    </select>
+                                                    <label>Oeuvre</label>
+                                                    <input type='text' class="form-control" disabled="disabled" value="${reservation.oeuvrevente.titreOeuvrevente}"/>
+                                                    <input type="hidden" name="oeuvre" value=${reservation.oeuvrevente.idOeuvrevente} />
                                                 </div>
                                             </div>
                                         </div>
@@ -43,7 +39,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Date de réservation</label>
-                                                    <input type='text' class="form-control" name="dateReservation" id='datepicker' required/>
+                                                    <input type='text' class="form-control" name="dateReservation" id='datepicker' value="${reservation.dateDisplayed}" required/>
                                                 </div>
                                             </div>
                                         </div>
@@ -52,12 +48,8 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Adhérent</label>
-                                                    <select name="adherent" required>
-                                                        <option selected="true" disabled="disabled" value="L">Choisir un adhérent</option>
-                                                        <c:forEach items="${adherents}" var="item">
-                                                            <option value="${item.idAdherent}">${item.nomAdherent}</option>
-                                                        </c:forEach>
-                                                    </select>
+                                                    <input type='text' class="form-control" disabled="disabled" value="${reservation.adherent.nomAdherent}"/>
+                                                    <input type="hidden" name="adherent" value=${reservation.adherent.idAdherent} />
                                                 </div>
                                             </div>
                                         </div>
