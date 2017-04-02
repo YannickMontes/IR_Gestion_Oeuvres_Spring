@@ -35,7 +35,7 @@ public class MultiControleur {
             Service unService = new Service();
             request.setAttribute("mesAdherents", unService.consulterListeAdherents());
             request.setAttribute("pageName", "Adhérents");
-            request.setAttribute("pageName", "Liste des adhérents");
+            request.setAttribute("pageName", "Liste des adherents");
 
             destinationPage = "listerAdherents";
         } catch (MonException e) {
@@ -77,7 +77,7 @@ public class MultiControleur {
     public ModelAndView ajouterAdherent(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String destinationPage = "";
-        request.setAttribute("pageName", "Ajouter un adhérent");
+        request.setAttribute("pageName", "Ajouter un adherent");
         try {
             destinationPage = "ajouterAdherent";
         } catch (Exception e) {
@@ -101,7 +101,7 @@ public class MultiControleur {
             Adherent ad = unService.consulterAdherent(id);
             request.setAttribute("adherant", ad);
             destinationPage = "modifierAdherent";
-            request.setAttribute("pageName", "Modifier un adhérent");
+            request.setAttribute("pageName", "Modifier un adherent");
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "erreur";
